@@ -5,7 +5,7 @@ import useBuildingData from "../../utils/BuildingDataProvider";
 import { RootState } from "../../store/store";
 import "./Layout.css";
 
-const Layout: React.FC<{children:ReactNode}> = ({children}) => {
+const Layout: React.FC<{children:JSX.Element}> = ({children}) => {
   const {flooraccess} = useSelector((state: RootState)=>state.floorreducer)
   const { getFloorByIndex } = useBuildingData();
 

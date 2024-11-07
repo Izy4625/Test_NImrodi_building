@@ -9,26 +9,19 @@ import Reception from "./pages/Reception/Reception";
  const Router = () => {
   return (
     <BrowserRouter>
+     <Layout>
       <Routes>
-        <Route path="/" element={<Layout children={<Reception/>} />} />
-        {/* <Route path="/floor/:id" element={<Floor />} /> */}
-        <Route path="/Forbidden" element={<Forbidden />}/>
-        <Route
-          path="/floor:id"
-          element={
-            <PrivateRoute component={<Floor />}>
+        <Route path="/" element={<Reception/>} />
+        {/* <Route path="/floor/:id" element={<Floor/>} /> */}
+        <Route path="/forbidden" element={<Forbidden/>}/>
+        <Route path="/floor/:id"  element={
+            <PrivateRoute>
+              <Floor />
             </PrivateRoute>
           }
         />
-        {/* <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        /> */}
       </Routes>
+      </Layout>
     </BrowserRouter>
   );
 };

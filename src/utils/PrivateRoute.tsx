@@ -1,30 +1,40 @@
 import { ReactNode, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
-import {RootState}  from "../store/store";
+import { Navigate, useNavigate, useParams } from "react-router";
+import { RootState } from "../store/store";
 import Forbidden from "../pages/Forbidden/Forbidden";
-interface IPrivateRoute{
-    component: ReactNode,
+
+interface IPrivateRoute {
+    children: JSX.Element;
 }
 
-const PrivateRoute = ({ component}:IPrivateRoute) => {
-    const [index1, setIndex1] = useState<number>(0)
-    const [bool, setBool] = useState<boolean>(false)
-    const {flooraccess} = useSelector((state: RootState)=>state.floorreducer)
-    const { index } = useParams<{ index: string }>();
-    const navigate = useNavigate()
-    if(!index) return
-    setIndex1(Number(index))
-    setBool(flooraccess[index1])
-    if(!bool) {
-        navigate("/Forbiiden")
+const PrivateRoute = ({ children }: IPrivateRoute) => {
+  const [hasAccess, setHasAccess] = useState<boolean | null>(null);
+  const AccessFlors = useSelector((state: RootState) => state.floorreducer.flooraccess);
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+
+  useEffect(() => {
+    if (id) {
+      const floorIndex = Number(id);
+      if (AccessFlors[floorIndex] === false) {
+        setHasAccess(false);
+        navigate("/forbidden");
+      } else {
+        setHasAccess(true);
+      }
     }
-    return (
-      <>
-      {component}
-      </>
-    )
-   
+  }, [id, AccessFlors, navigate]);
+
+  if (hasAccess === null) {
+    return <Forbidden />;
+  }
+
+  if (!hasAccess) {
+    return <Forbidden />;
+  }
+
+  return <>{children}</>;
 };
 
-export default PrivateRoute
+export default PrivateRoute;

@@ -25,7 +25,7 @@ const useBuildingData = () => {
     async function loadData(){
     try {
       
-      console.log(data_json);
+     
       if(data_json.length > 0){
         const myJSON = JSON.stringify(data_json);
         const myObj: Floor[] = JSON.parse(myJSON);

@@ -18,7 +18,9 @@ const Reception: React.FC = () => {
   };
 
   const handleSetRole = (index: number) => {
+    
     dispatch(setRole(index));
+    
   };
 
   return (
@@ -52,7 +54,7 @@ const Reception: React.FC = () => {
           <div
             key={index}
             onClick={() => handleSetRole(index)}
-            className={`box ${role === currentRole.role.role ? "blue" : "red"}`}
+            className={`box ${role === currentRole.role ? "blue" : "red"}`}
             role="button"
             tabIndex={0}
             onKeyPress={(e) => e.key === "Enter" && handleSetRole(index)}
